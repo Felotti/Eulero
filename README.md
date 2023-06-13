@@ -22,6 +22,7 @@ In the file `refman.pdf` there is all the description of the code Eulero.
 The output results are stored in `../Eulero/build_Eulero/results`
 
 #__________________________________________________________
+
 To generate a Makefile for this code using  Cmake, type the following command into the terminal from the main directory Eulero
 >> mkdir build
 >> cmake -S ../Eulero -B ../Eulero/build_Eulero
@@ -30,4 +31,5 @@ To generate a Makefile for this code using  Cmake, type the following command in
 >> ./main "../inputfile_***.prm"
 
 For this last line, change the name of the `inputfile_***.prm`, choosing the name described before.
+
 #__________________________________________________________
