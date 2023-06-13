@@ -1,0 +1,42 @@
+subsection Physical data
+  set testcase = 5
+  set fe_degree = 2
+  set fe_degree_Q0 = 0
+  set n_q_points_1d = 5
+  set n_q_points_1d_Q0 = 1
+  set final_time   = 5.0
+  set gamma = 1.4
+end
+
+
+subsection Space discretization
+  set max_loc_refinements = 1
+  set min_loc_refinements = 1
+end
+
+subsection Limiter
+  set beta_density = 0.0
+  set beta_momentum =0.20
+  set beta_energy = 0.20
+
+  set M = 0.0
+  set beta = 1.0
+  set positivity = true
+  set positivity = false
+  set type = TVB                 #Choice TVB|filter
+  set function_limiter = minmod  #Choice minmod|vanAlbada
+end
+
+subsection Param
+ set EulerNumericalFlux = harten_lax_vanleer   #Choice lax_friedrichs|harten_lax_vanleer|hllc_centered|SLAU|HLLC|roe
+end
+
+set n_stages = 3
+
+set refine = false
+set refine_indicator = gradient_density  #Choice gradient_density|gradient_pressure
+
+#The output frequency
+set output_tick = 0.2
+
+
