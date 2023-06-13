@@ -97,13 +97,7 @@ int main(int argc, char **argv)
 
         Parameters::Data_Storage data;
         data.read_data(argv[1]);
-        // data.read_data("../inputfile_bstep.prm");
-        //data.read_data("../inputfile_cylinder.prm");
-        // data.read_data("../inputfile_DMR.prm");
-        //data.read_data("../inputfile_sod.prm");
-        // data.read_data("../inputfile_fstep.prm");
-        //  data.read_data("../inputfile_2Driemann.prm");
-
+     
         EulerProblem<dimension> euler_problem(data);
         euler_problem.run();
 
