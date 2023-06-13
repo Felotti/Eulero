@@ -63,7 +63,6 @@
 
 using namespace dealii;
 
-/// @sect3{Equation data}
 namespace EquationData{
 
 /// We now define a class with the exact solution for the test case 4.
@@ -83,7 +82,7 @@ private :
 
 
 /*! We define a class for the boundary condition. Given that
- * the Euler equations are a problem with $d+2$ equations in $d$ dimensions,
+ * the Euler equations are a problem with \f$d+2 \f$ equations in $d$ dimensions,
  * we need to tell the Function base class about the correct number of
  * components.
  */
@@ -93,7 +92,7 @@ class BoundaryData : public dealii::Function<dim>
 public:
     BoundaryData(const double time,Parameters::Data_Storage &parameters_in,const unsigned int a);
 
-    unsigned int a;
+    unsigned int a; /*!< Integer used to select the corrisponding boundary condition */
 
     virtual double value(const dealii::Point<dim> & p,
                          const unsigned int component = 0) const override;
@@ -102,7 +101,7 @@ private :
 };
 
 /** We define a class for the initial condition. Given that
- * the Euler equations are a problem with $d+2$ equations in $d$ dimensions,
+ * the Euler equations are a problem with \f$d+2 \f$ equations in \f$d \f$ dimensions,
  * we need to tell the Function base class about the correct number of
  * components.
  */

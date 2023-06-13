@@ -43,7 +43,7 @@ void Solver::parse_parameters (ParameterHandler &prm)
       prm.leave_subsection();
    }
 
-
+///constructor
 Data_Storage::Data_Storage(){
 
     prm.enter_subsection("Physical data");
@@ -149,7 +149,7 @@ Data_Storage::Data_Storage(){
 }
 
 
-/// Function to read all declared parameters
+/*! Function to read all declared parameters*/
 void Data_Storage::read_data(const std::string& filename)
 {
     std::ifstream file(filename);

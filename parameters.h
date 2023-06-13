@@ -64,10 +64,9 @@
 
 using namespace dealii;
 
-/// @sect{Run-time parameter handling}
 
-/// We set up a class that holds all
-/// parameters that control the execution of the program.
+/*! We set up a class that holds all
+* parameters that control the execution of the program.*/
 namespace Parameters
 {
 
@@ -76,8 +75,7 @@ namespace Parameters
   * numerical flux (Riemann solver) at the faces between cells. For this
   * program, we have implemented a modified variant of the Lax--Friedrichs
   * flux, the Harten--Lax--van Leer (HLL) flux, the HLLC flux, the Roe flux and
-  * the SLAU flux.
-*/
+  * the SLAU flux.*/
 struct Solver
    {
     enum EulerNumericalFlux
@@ -117,7 +115,7 @@ struct Data_Storage : public Solver
     void read_data(const std::string& filename);
 
     int testcase;  /*!< Number of specific testcase. Choices are : 1) Channel with hole; 2) backward facing step 3) forward facing step
-                    * 4) sod-Shock problem; 5) //supersonic flow past a circular cylinder test; 6) double-mach reflection problem; 7) 2D Riemann problem */
+                    * 4) sod-Shock problem; 5) supersonic flow past a circular cylinder test; 6) double-mach reflection problem; 7) 2D Riemann problem */
     int n_stages; /*!< number of stages in SSP runge kutta */
     int fe_degree; /*!< polynomial degree */
     int fe_degree_Q0; /*!< polynomial degree for Q0 solution */

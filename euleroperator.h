@@ -66,6 +66,7 @@
 namespace Euler_DG{
 
 using Number = double;
+
 /*! This class implements the evaluators for the Euler problem. Since the present
  * operator is non-linear and does not require a matrix interface (to be
  * handed over to preconditioners), we only implement an `apply`
@@ -82,8 +83,7 @@ using Number = double;
  * We provide a few functions to allow a user
  * to pass in various forms of boundary conditions on different parts of the
  * domain boundary marked by types::boundary_id variables, as well as
- * possible body forces.
- */
+ * possible body forces. */
 template <int dim, int degree, int n_points_1d>
 class EulerOperator
 {
@@ -91,8 +91,6 @@ public:
     static constexpr unsigned int n_quadrature_points_1d = n_points_1d;
 
     EulerOperator(dealii::TimerOutput &timer_output,Parameters::Data_Storage &parameters_in);
-
-    void read_parameters(const std::string& input_filename);
 
     void reinit(const dealii::MappingQ1<dim>& mapping,
                 std::vector<const DoFHandler<dim> *> &dof_handler,

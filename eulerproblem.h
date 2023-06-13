@@ -75,31 +75,30 @@ namespace Euler_DG{
 using namespace dealii;
 using Number = double;
 
-/// @sect{The EulerProblem class}
 
-  /*! This class combines the EulerOperator class with the time integrator and
-  * the usual global data structures such as FiniteElement and DoFHandler, to
-  * actually run the simulations of the Euler problem.
-  *
-  * The member variables are a triangulation, a finite element, a mapping,
-  * and a DoFHandler to describe the degrees of freedom.
-  * In this class, we implemente the member functions usefull for
-  * refinement and compute limiter as TVB or filter limiter.
-  * In the update funcion we implement all the stages for the SSP Runge-Kutta
-  * in which at each stage we do the limiter of the solution.
-  * In addition, we keep an instance of the
-  * EulerOperator described above around, which will do all heavy lifting in
-  * terms of integrals, and some parameters for time integration like the
-  * current time or the time step size.
-  * Furthermore, we use a PostProcessor instance to write some additional
-  * information to the output file. The interface of the DataPostprocessor class
-  * is intuitive, requiring us to provide information about what needs to be evaluated
-  * (typically only the values of the solution, except for the Schlieren plot
-  * that we only enable in 2D where it makes sense), and the names of what
-  * gets evaluated. Note that it would also be possible to extract most
-  * information by calculator tools within visualization programs such as
-  * ParaView, but it is so much more convenient to do it already when writing
-  * the output. */
+/*! This class combines the EulerOperator class with the time integrator and
+* the usual global data structures such as FiniteElement and DoFHandler, to
+* actually run the simulations of the Euler problem.
+*
+* The member variables are a triangulation, a finite element, a mapping,
+* and a DoFHandler to describe the degrees of freedom.
+* In this class, we implemente the member functions usefull for
+* refinement and compute limiter as TVB or filter limiter.
+* In the update funcion we implement all the stages for the SSP Runge-Kutta
+* in which at each stage we do the limiter of the solution.
+* In addition, we keep an instance of the
+* EulerOperator described above around, which will do all heavy lifting in
+* terms of integrals, and some parameters for time integration like the
+* current time or the time step size.
+* Furthermore, we use a PostProcessor instance to write some additional
+* information to the output file. The interface of the DataPostprocessor class
+* is intuitive, requiring us to provide information about what needs to be evaluated
+* (typically only the values of the solution, except for the Schlieren plot
+* that we only enable in 2D where it makes sense), and the names of what
+* gets evaluated. Note that it would also be possible to extract most
+* information by calculator tools within visualization programs such as
+* ParaView, but it is so much more convenient to do it already when writing
+* the output. */
 template <int dim>
 class EulerProblem
 {

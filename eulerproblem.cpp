@@ -64,7 +64,7 @@ namespace Euler_DG{
 using namespace dealii;
 
 
-/// constructor of Postprocessor class
+/*! constructor of Postprocessor class*/
 template<int dim>
 EulerProblem<dim>::Postprocessor::Postprocessor(Parameters::Data_Storage &parameters_in, int a_)
     : do_schlieren_plot(dim==2),parameters(parameters_in),a(a_){}
@@ -73,10 +73,10 @@ EulerProblem<dim>::Postprocessor::Postprocessor(Parameters::Data_Storage &parame
 /*! For the main evaluation of the field variables, we first check that the
 * lengths of the arrays equal the expected values. Then we loop over all evaluation
 *  points and fill the respective information: First we fill the primal solution
-* variables of density $\rho$, momentum $\rho \mathbf{u}$ and energy $E$,
-* then we compute the derived velocity $\mathbf u$, the pressure $p$, the
-* speed of sound $c=\sqrt{\gamma p / \rho}$, as well as the Schlieren plot
-* showing $s = |\nabla \rho|^2$ in case it is enabled.*/
+* variables of density \f$\rho \f$, momentum \f$\rho \mathbf{u} \f$ and energy E,
+* then we compute the derived velocity \f$\mathbf u \f$, the pressure \f$p \f$, the
+* speed of sound \f$c=\sqrt{\gamma p / \rho} \f$, as well as the Schlieren plot
+* showing \f$s = |\nabla \rho|^2 \f$ in case it is enabled.*/
 template <int dim>
 void EulerProblem<dim>::Postprocessor::evaluate_vector_field(
         const DataPostprocessorInputs::Vector<dim> &inputs,
@@ -149,9 +149,9 @@ std::vector<std::string> EulerProblem<dim>::Postprocessor::get_names() const
 
 }
 
-/// For the interpretation of quantities, we have scalar density, energy,
-/// pressure, speed of sound, and the Schlieren plot, and vectors for the
-/// momentum and the velocity.
+/*! For the interpretation of quantities, we have scalar density, energy,
+* pressure, speed of sound, and the Schlieren plot, and vectors for the
+* momentum and the velocity.*/
 template <int dim>
 std::vector<DataComponentInterpretation::DataComponentInterpretation>
 EulerProblem<dim>::Postprocessor::get_data_component_interpretation() const
@@ -171,9 +171,9 @@ EulerProblem<dim>::Postprocessor::get_data_component_interpretation() const
     return interpretation;
 }
 
-/// With respect to the necessary update flags, we only need the values for
-/// all quantities but the Schlieren plot, which is based on the density
-/// gradient.
+/*! With respect to the necessary update flags, we only need the values for
+* all quantities but the Schlieren plot, which is based on the density
+* gradient. */
 template <int dim>
 UpdateFlags EulerProblem<dim>::Postprocessor::get_needed_update_flags() const
 {
@@ -184,11 +184,11 @@ UpdateFlags EulerProblem<dim>::Postprocessor::get_needed_update_flags() const
 }
 
 
-/// The constructor for this class is unsurprising: We set up a parallel
-/// triangulation based on the `MPI_COMM_WORLD` communicator, a vector finite
-/// element with `dim+2` components for density, momentum, and energy, a
-/// high-order mapping of the same degree as the underlying finite element,
-/// initialize the time and time step to zero, and finite element usefull for the TVB limiter.
+/*! The constructor for this class is unsurprising: We set up a parallel
+* triangulation based on the `MPI_COMM_WORLD` communicator, a vector finite
+* element with `dim+2` components for density, momentum, and energy, a
+* high-order mapping of the same degree as the underlying finite element,
+*  initialize the time and time step to zero, and finite element usefull for the TVB limiter.*/
 template <int dim>
 EulerProblem<dim>::EulerProblem(Parameters::Data_Storage  &parameters_in)
         : pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
@@ -219,16 +219,14 @@ EulerProblem<dim>::EulerProblem(Parameters::Data_Storage  &parameters_in)
 
 
 
-/// given a cell iterator, return the cell numbe of a given cell
+/*! given a cell iterator, return the cell numbe of a given cell*/
 template <typename ITERATOR>
 unsigned int cell_number (const ITERATOR &cell)
 {
     return cell->user_index();
 }
 
-/*!
-* \brief EulerProblem::make_grid
-*  As a mesh, this program implements different options, depending on the
+/*!  As a mesh, this program implements different options, depending on the
 * global variable `testcase`.
 * if testcase == 1, then grid is channel with hole
 * if testcase == 2, then grid is backward step
@@ -709,9 +707,7 @@ void EulerProblem<dim>::make_grid()
 
 }
 
-/*!
-*  \brief EulerProblem::make_dofs
-* We call `make_dofs` every time we compute a refine of the mesh.
+/*! We call `make_dofs` every time we compute a refine of the mesh.
 * With respect to quadrature, we want to select two different
 * ways of computing the underlying integrals: The first is a flexible one,
 * based on a template parameter `n_points_1d`. More accurate
@@ -722,7 +718,6 @@ void EulerProblem<dim>::make_grid()
 * only on affine element shapes and not on deformed elements, it enables
 * the fast inversion of the mass matrix by tensor product techniques,
 * necessary to ensure optimal computational efficiency overall.
-*
 * For each cell, find neighbourig cell. This is needed for limiter*/
 template<int dim>
 void EulerProblem<dim>::make_dofs()
@@ -807,6 +802,7 @@ void EulerProblem<dim>::make_dofs()
 
          }
    }
+    //set time in boundary condition of testcase double mach reflection
   /*  double length = 3.2;
     double height = 1.0;
     double wall_position = 1./6.;
@@ -858,22 +854,17 @@ void EulerProblem<dim>::make_dofs()
     euler_operator_Q0.set_wall_boundary(4);*/
 }
 
-
-/// @sect14{Compute refinement indicator and refine grid}
-  /*!
- * \brief EulerProblem::adapt_mesh
- * This function take care of the adaptive mesh refinement.
- * the three tasks this function performs is to first find out wich cells to
- * refine, then to actually do the refinement and eventually transfer the solution
- * vectors between the two different grids. The first task is simply
- * achieved by computing the refinements indicator, as the gradient of the density
- * $\eta_K = \log\left(1+|\nabla\rho(x_K)|\right)$ where $x_K$ is the center of the cell or
- * as the gradient of the pressure $\eta = |\nabla p |$.
- * The second task is to loop over all cells and mark those that
- * we think should be refined. Then we need to transfer the various solution
- * vectors from the old to the new grid while we do refinement. The SolutionTransfer
- * class is our friend here.
- */
+/*! This function take care of the adaptive mesh refinement.
+* the three tasks this function performs is to first find out wich cells to
+* refine, then to actually do the refinement and eventually transfer the solution
+* vectors between the two different grids. The first task is simply
+* achieved by computing the refinements indicator, as the gradient of the density
+* \f$\eta_K = \log\left(1+|\nabla\rho(x_K)|\right) \f$ where \f$x_K \f$ is the center of the cell or
+* as the gradient of the pressure \f$\eta = |\nabla p | \f$.
+* The second task is to loop over all cells and mark those that
+* we think should be refined. Then we need to transfer the various solution
+* vectors from the old to the new grid while we do refinement. The SolutionTransfer
+ * class is our friend here.*/
 template<int dim>
 void EulerProblem<dim>::adapt_mesh()
   {
@@ -1019,11 +1010,8 @@ void EulerProblem<dim>::adapt_mesh()
 
 }
 
-/// @sect41{Limiters and related functions}
 
-
-
-/// Compute cell average solution
+/*! Compute cell average solution*/
 template <int dim>
 void EulerProblem<dim>::compute_cell_average (LinearAlgebra::distributed::Vector<double> & current_solution)
 {
@@ -1060,8 +1048,8 @@ void EulerProblem<dim>::compute_cell_average (LinearAlgebra::distributed::Vector
 
 }
 
-/// if cell is activem return cell average.
-/// if cell is not active, return area average of child cells.
+/*! if cell is activem return cell average.
+* if cell is not active, return area average of child cells.*/
 template<int dim>
 void EulerProblem<dim>::get_cell_average(const typename dealii::DoFHandler<dim>::cell_iterator& cell,
                        dealii::Vector<double>& avg)
@@ -1091,7 +1079,7 @@ void EulerProblem<dim>::get_cell_average(const typename dealii::DoFHandler<dim>:
  }
 
 
-/// Compute shock indicator - KXRCF indicator
+/*! Compute shock indicator - KXRCF indicator.*/
 template <int dim>
 void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vector<double> & current_solution)
 {
@@ -1244,7 +1232,7 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
 
 }
 
-/// TVB version of minmod limiter. If Mdx2=0 then it is TVD limiter.
+/*! TVB version of minmod limiter. If Mdx2=0 then it is TVD limiter.*/
 double minmod (const double& a,
              const double& b,
              const double& c,
@@ -1263,7 +1251,7 @@ double minmod (const double& a,
 }
 
 
-/// TVB version of van Albada limiter.
+/*! TVB version of van Albada limiter.*/
 double vanAlbada (const double& c,
               const double& a,
               const double &b,
@@ -1277,7 +1265,7 @@ double vanAlbada (const double& c,
  return (((a*a + eps*eps)*b) + ((b*b + eps*eps)*a))*inv;
 }
 
-/// Apply the TVB limiter using or minmod function or van Albada function
+/*! Apply the TVB limiter using or minmod function or van Albada function*/
 template <int dim>
 LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_limiter_TVB(LinearAlgebra::distributed::Vector<Number> & current_solution)
 {
@@ -1588,7 +1576,7 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_positivity_l
  return current_solution;
 }
 
-/// Apply filtering monotonization approach
+/*! Apply filtering monotonization approach*/
 template< int dim>
 LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_filter(LinearAlgebra::distributed::Vector<Number> &    sol_H,
                                                                      LinearAlgebra::distributed::Vector<Number> &    sol_M)
@@ -1616,9 +1604,11 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_filter(Linea
     FETools::interpolate(dof_handler_Q0, sol_M, dof_handler, sol_aux);
 
 
-   for(const auto& cell: dof_handler.active_cell_iterators()) {
+    for(const auto& cell: dof_handler.active_cell_iterators())
+    {
 
-       if(cell->is_locally_owned()) {
+       if(cell->is_locally_owned())
+    {
 
            fe_values.reinit (cell);
 
@@ -1658,8 +1648,8 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_filter(Linea
            }
        }
 
-}
-   }
+    }
+    }
    return sol_H;
 }
 
@@ -1691,7 +1681,6 @@ void EulerProblem<dim>::update(const double    current_time,
         vec_tmp2_Q0.reinit(solution_np_Q0);
         vec_tmp3_Q0.reinit(solution_np_Q0);
     }
-   // reifacciomesh(current_time);
 
     //stage 1 DENSITY
     euler_operator_Q0.apply(current_time, tmp_solution_Q0, vec_tmp1_Q0);
@@ -1704,18 +1693,19 @@ void EulerProblem<dim>::update(const double    current_time,
     solution_np.add(time_step/6.,vec_tmp1);
     vec_tmp2 = tmp_sol_n;
     vec_tmp2.add(time_step,vec_tmp1);
-if(parameters.type == "TVB")
-{
-    compute_cell_average(vec_tmp2);
-    compute_shock_indicator(vec_tmp2);
-    vec_tmp2 = apply_limiter_TVB(vec_tmp2);
+    if(parameters.type == "TVB")
+    {
+        compute_cell_average(vec_tmp2);
+        compute_shock_indicator(vec_tmp2);
+        vec_tmp2 = apply_limiter_TVB(vec_tmp2);
 
-  if(parameters.positivity)
-      vec_tmp2 = apply_positivity_limiter(vec_tmp2);
-}else if (parameters.type == "filter")
-{
-     vec_tmp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
-}
+        if(parameters.positivity)
+            vec_tmp2 = apply_positivity_limiter(vec_tmp2);
+    }
+    else if (parameters.type == "filter")
+    {
+         vec_mp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
+    }
 
     //stage 2
     euler_operator_Q0.apply(current_time,vec_tmp2_Q0,vec_tmp3_Q0);
@@ -1728,19 +1718,19 @@ if(parameters.type == "TVB")
     vec_tmp2 = tmp_sol_n;
     vec_tmp2.add(time_step/4.,vec_tmp1);
     vec_tmp2.add(time_step/4.,vec_tmp3);
-if(parameters.type == "TVB")
-{
-  compute_cell_average(vec_tmp2);
-   compute_shock_indicator(vec_tmp2);
-   vec_tmp2 = apply_limiter_TVB(vec_tmp2);
+    if(parameters.type == "TVB")
+    {
+        compute_cell_average(vec_tmp2);
+        compute_shock_indicator(vec_tmp2);
+        vec_tmp2 = apply_limiter_TVB(vec_tmp2);
 
-    if(parameters.positivity)
-        vec_tmp2 = apply_positivity_limiter(vec_tmp2);
-}
-else if (parameters.type == "filter")
-{
-    vec_tmp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
-}
+        if(parameters.positivity)
+            vec_tmp2 = apply_positivity_limiter(vec_tmp2);
+    }
+    else if (parameters.type == "filter")
+    {
+        vec_tmp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
+    }
 
    //PASSO 3
     euler_operator_Q0.apply(current_time,vec_tmp2_Q0,vec_tmp1_Q0);
@@ -1748,19 +1738,19 @@ else if (parameters.type == "filter")
     euler_operator.apply(current_time,vec_tmp2,vec_tmp1);
     solution_np.add(2.*time_step/3.,vec_tmp1);
     if(parameters.type == "TVB")
-{
-   compute_cell_average(solution_np);
-   compute_shock_indicator(solution_np);
+    {
+        compute_cell_average(solution_np);
+        compute_shock_indicator(solution_np);
 
-   solution_np = apply_limiter_TVB(solution_np);
+        solution_np = apply_limiter_TVB(solution_np);
 
-   if(parameters.positivity)
-        solution_np = apply_positivity_limiter(solution_np);
-}
+        if(parameters.positivity)
+            solution_np = apply_positivity_limiter(solution_np);
+    }
     else if (parameters.type == "filter")
-{
-     solution_np = apply_filter(solution_np,solution_np_Q0);
-}
+    {
+        solution_np = apply_filter(solution_np,solution_np_Q0);
+    }
 
 }
 
@@ -1845,8 +1835,8 @@ void EulerProblem<dim>::output_results(const unsigned int result_number)
             interpretation.push_back(DataComponentInterpretation::component_is_scalar);
             solution.update_ghost_values();
             data_out.add_data_vector(dof_handler, solution, names, interpretation);
-        //  if(parameters.testcase == 4 && dim ==2)
-          // {
+          if(parameters.testcase == 4 && dim ==2)
+           {
              LinearAlgebra::distributed::Vector<Number> sol_exact(solution);
              euler_operator.project(EquationData::ExactSolution<dim>(time,parameters), sol_exact);
 
@@ -1863,7 +1853,7 @@ void EulerProblem<dim>::output_results(const unsigned int result_number)
              interpretation_exact.push_back(DataComponentInterpretation::component_is_scalar);
             sol_exact.update_ghost_values();
              data_out.add_data_vector(dof_handler, sol_exact, names_exact, interpretation_exact);
-           // }
+            }
 
           //  data_out.build_patches(mapping,fe.degree,DataOut<dim>::curved_inner_cells);
             std::vector<std::string> names_Q0;
@@ -1945,10 +1935,8 @@ void EulerProblem<dim>::run()
 
     make_dofs();
 
-
     euler_operator_Q0.project(EquationData::InitialData<dim>(parameters),solution_Q0);
     euler_operator.project(EquationData::InitialData<dim>(parameters), solution);
-
 
     double min_vertex_distance = std::numeric_limits<double>::max();
     for (const auto &cell : triangulation.active_cell_iterators())
@@ -1993,22 +1981,21 @@ void EulerProblem<dim>::run()
         }
     time += time_step;
 
-if(parameters.refine && (timestep_number==1))
-{
- adapt_mesh();
-++pre_refinement_step;
-}
-else if(parameters.refine && (timestep_number>0) && (timestep_number % 50 == 0))
-{
- adapt_mesh();
-}
+    if(parameters.refine && (timestep_number==1))
+    {
+        adapt_mesh();
+        ++pre_refinement_step;
+    }
+    else if(parameters.refine && (timestep_number>0) && (timestep_number % 50 == 0))
+    {
+        adapt_mesh();
+    }
 
-if (static_cast<int>(time / parameters.output_tick) !=
-        static_cast<int>((time - time_step) / parameters.output_tick) ||
-    time >= parameters.final_time - 1e-12)
- output_results(
-     static_cast<unsigned int>(std::round(time / parameters.output_tick)));
-
+    if (static_cast<int>(time / parameters.output_tick) !=
+            static_cast<int>((time - time_step) / parameters.output_tick) ||
+        time >= parameters.final_time - 1e-12)
+     output_results(
+         static_cast<unsigned int>(std::round(time / parameters.output_tick)));
 
     }
 

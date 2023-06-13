@@ -68,19 +68,17 @@ namespace Euler_DG{
 using namespace dealii;
 using Number =double;
 
- /// @sect{Implementation of point-wise operations of the Euler equations}
+/** In the following functions, we implement the various problem-specific
+* operators pertaining to the Euler equations. Each function acts on the
+* vector of conserved variables \f$[\rho, \rho\mathbf{u}, E]\f$ that we hold in
+* the solution vectors, and computes various derived quantities.
+*/
 
-  /** In the following functions, we implement the various problem-specific
-  * operators pertaining to the Euler equations. Each function acts on the
-  * vector of conserved variables $[\rho, \rho\mathbf{u}, E]$ that we hold in
-  * the solution vectors, and computes various derived quantities.
-  */
-
-  /*! First out is the computation of the velocity, that we derive from the
-  * momentum variable $\rho \mathbf{u}$ by division by $\rho$. One thing to
-  * note here is that we decorate all those functions with the keyword
-  * `DEAL_II_ALWAYS_INLINE`.
-  */
+/*! First out is the computation of the velocity, that we derive from the
+* momentum variable \f$\rho \mathbf{u}\f$ by division by \f$\rho\f$. One thing to
+* note here is that we decorate all those functions with the keyword
+* `DEAL_II_ALWAYS_INLINE`.
+*/
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE //
 Tensor<1, dim, Number>
@@ -96,8 +94,8 @@ euler_velocity(const Tensor<1, dim + 2, Number> &conserved_variables)
 }
 
 /*! The next function computes the pressure from the vector of conserved
-* variables, using the formula $p = (\gamma - 1) \left(E - \frac 12 \rho
-* \mathbf{u}\cdot \mathbf{u}\right)$.
+* variables, using the formula \f$p = (\gamma - 1) \left(E - \frac 12 \rho
+* \mathbf{u}\cdot \mathbf{u}\right)\f$.
 * */
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE //
@@ -144,10 +142,9 @@ euler_flux(const Tensor<1, dim + 2, Number> &conserved_variables,Parameters::Dat
 
 /*! This next function is a helper to simplify the implementation of the
  * numerical flux, implementing the action of a tensor of tensors (with
- * non-standard outer dimension of size `dim + 2`, so the standard overloads
+ * non-standard outer dimension of size dim + 2, so the standard overloads
  * provided by deal.II's tensor classes do not apply here) with another
- * tensor of the same inner dimension, i.e., a matrix-vector product.
-*/
+ * tensor of the same inner dimension, i.e., a matrix-vector product.*/
 template <int n_components, int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE //
 Tensor<1, n_components, Number>
@@ -160,7 +157,7 @@ operator*(const Tensor<1, n_components, Tensor<1, dim, Number>> &matrix,
     return result;
 }
 
-/// Function that returns the sign of a given value.
+/*! Function that returns the sign of a given value.*/
 template <typename Number>
 inline DEAL_II_ALWAYS_INLINE //
 Number sgn(Number & val)
@@ -170,10 +167,10 @@ Number sgn(Number & val)
 
 /*! This function implements the numerical flux (Riemann solver). It gets the
 * state from the two sides of an interface and the normal vector, oriented
-* from the side of the solution $\mathbf{w}^-$ towards the solution
-* $\mathbf{w}^+$.
+* from the side of the solution \f$\mathbf{w}^- \f$ towards the solution
+* \f$\mathbf{w}^+ \f$.
 * In this and the following functions, we use variable suffixes `_m` and
-* `_p` to indicate quantities derived from $\mathbf{w}^-$ and $\mathbf{w}^+$,
+* `_p` to indicate quantities derived from \f$\mathbf{w}^- \f$ and \f$\mathbf{w}^+ \f$,
 * i.e., values "here" and "there" relative to the current cell when looking
 * at a neighbor cell.
 */
