@@ -24,11 +24,21 @@ The output results are stored in `../Eulero/build_Eulero/results`
 #__________________________________________________________
 
 To generate a Makefile for this code using  Cmake, type the following command into the terminal from the main directory Eulero
->> mkdir build
->> cmake -S ../Eulero -B ../Eulero/build_Eulero
->> cd build_Eulero
->> cmake --build_Eulero .
->> ./main "../inputfile_***.prm"
+```
+mkdir build
+```
+```
+cmake -S ../Eulero -B ../Eulero/build_Eulero
+```
+```
+cd build_Eulero
+```
+```
+cmake --build_Eulero .
+```
+```
+./main "../inputfile_***.prm"
+```
 
 For this last line, change the name of the `inputfile_***.prm`, choosing the name described before.
 
