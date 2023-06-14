@@ -19,21 +19,25 @@ Other files in the directory:
 - `operation.h`
 
 In the file `refman.pdf` there is all the description of the code Eulero. 
-The output results are stored in `../Eulero/build_Eulero/results`
+The output results are stored in `../Eulero/build/results`
+In the build_Eulero there are the simulations obtained for the project.
 
 To generate a Makefile for this code using  Cmake, type the following command into the terminal from the main directory Eulero
 ``` 
 mkdir build 
 ```
 ``` 
-cmake -S ../Eulero -B ../Eulero/build_Eulero
+cmake -S ../Eulero -B ../Eulero/build
 ```
 ``` 
-cd build_Eulero 
+cd build
 ```
 ```
-cmake --build_Eulero .
+cmake --build .
 ```
+```
+mkdir results
+``
 ``` 
 ./main "../inputfile_***.prm"
 ```
