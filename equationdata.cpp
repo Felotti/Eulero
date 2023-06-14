@@ -209,7 +209,7 @@ double InitialData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 2: { //b-step
+    case 2: { //backward facing step problem
         if (component == 0)
             return 7.0406*(x[0]<=0.5) + 1.4*(x[0]>0.5);
         else if (component == 1)
@@ -219,7 +219,7 @@ double InitialData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 3: { //f-step
+    case 3: { //forward facing step problem 
         if (component == 0)
             return 1.4;
         else if (component == 1)
@@ -229,7 +229,7 @@ double InitialData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 4: { //sod shock tube
+    case 4: { //sod shock tube problem
 
         if (component == 0)
             return 1.0*(x[0]<=0.0) + 0.125*(x[0] > 0.0);
@@ -241,7 +241,7 @@ double InitialData<dim>::value(const dealii::Point<dim> & x,
             return 0.;
 
     }
-    case 5: { //cylinder
+    case 5: { //supersonic flow past a circular cylinder test
         if (component == 0)
             return 1.4;
         else if (component == 1)
@@ -255,7 +255,7 @@ double InitialData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
         }
-    case 6: { //double mach reflection
+    case 6: { //double mach reflection problem
 
            if (component == 0)
                return 8.0*(x[0]<(1.0/6.0+(x[1]/sqrt(3)))) + 1.4*(x[0]>=(1.0/6.0+(x[1]/sqrt(3))));
@@ -316,7 +316,7 @@ double BoundaryData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 2: { //b-step
+    case 2: { //backward facing step problem
         if (component == 0)
             return 7.0406;
         else if (component == 1)
@@ -326,7 +326,7 @@ double BoundaryData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 3: { //f-step
+    case 3: { //forward facing step problem
         if (component == 0)
             return 1.4;
         else if (component == 1)
@@ -336,7 +336,7 @@ double BoundaryData<dim>::value(const dealii::Point<dim> & x,
         else
             return 0.;
     }
-    case 4: { //sod shock tube
+    case 4: { //sod shock tube problem
 
         if (component == 0)
             return 1.0;
@@ -348,7 +348,7 @@ double BoundaryData<dim>::value(const dealii::Point<dim> & x,
             return 0.;
 
     }
-    case 5: { //cylinder
+    case 5: { //supersonic flow past a circular cylinder test
         if (component == 0)
             return 1.4;
         else if (component == 1)
