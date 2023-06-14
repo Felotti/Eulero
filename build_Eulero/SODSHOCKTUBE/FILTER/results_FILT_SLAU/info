@@ -1,0 +1,99 @@
+subsection Physical data
+  set testcase = 4
+  set fe_degree = 2
+  set fe_degree_Q0 = 0
+  set n_q_points_1d = 5
+  set n_q_points_1d_Q0 = 1
+  set final_time   = 0.2
+  set gamma = 1.4
+end
+
+
+subsection Space discretization
+  set n_global_refinements = 3
+  set max_loc_refinements = 2 #4
+  set min_loc_refinements = 1 #2
+  set n_refinements = 1
+  set n_adaptive_pre_refinement_steps = 3
+end
+
+subsection Limiter
+  set beta_density = 9.90
+  set beta_momentum = 9.90
+  set beta_energy =9.90
+
+  set M = 0.0
+  set beta = 2.0
+  set positivity = false
+  set type =false #true is TVB, false is filter
+end
+
+subsection Param
+ set EulerNumericalFlux = SLAU
+# set RungeKuttaScheme = ssp_order_3
+end
+
+set n_stages = 3
+
+set refine = false
+
+#The output frequency
+set output_tick = 0.005
+Running with 1 MPI processes
+Vectorization over 2 doubles = 128 bits (SSE2)
+Time step size: 0.000840395, minimal h: 0.00625, initial transport scaling: 0.00528221
+
+Time:       0, dt:  0.00084, norm rho:  7.983e-17, rho * u:          0, energy: 2.209e-16
+Time: 0.00508, dt:  0.00057, norm rho:    0.01029, rho * u:    0.01479, energy:   0.02829
+Time:  0.0103, dt:  0.00042, norm rho:    0.01891, rho * u:    0.02405, energy:    0.0558
+Time:  0.0152, dt:  0.00044, norm rho:      0.025, rho * u:    0.02963, energy:   0.07262
+Time:  0.0204, dt:  0.00043, norm rho:     0.0301, rho * u:    0.03433, energy:   0.08666
+Time:  0.0251, dt:  0.00042, norm rho:      0.034, rho * u:    0.03824, energy:   0.09745
+Time:  0.0303, dt:  0.00043, norm rho:     0.0378, rho * u:    0.04215, energy:     0.108
+Time:   0.035, dt:  0.00043, norm rho:    0.04103, rho * u:    0.04535, energy:     0.117
+Time:  0.0402, dt:  0.00043, norm rho:    0.04429, rho * u:    0.04879, energy:     0.126
+Time:  0.0454, dt:  0.00043, norm rho:    0.04735, rho * u:    0.05192, energy:    0.1345
+Time:  0.0502, dt:  0.00044, norm rho:    0.04996, rho * u:     0.0547, energy:    0.1418
+Time:  0.0554, dt:  0.00044, norm rho:    0.05266, rho * u:     0.0575, energy:    0.1495
+Time:  0.0602, dt:  0.00043, norm rho:    0.05499, rho * u:    0.05999, energy:     0.156
+Time:  0.0654, dt:  0.00044, norm rho:    0.05745, rho * u:     0.0626, energy:     0.163
+Time:  0.0702, dt:  0.00043, norm rho:    0.05962, rho * u:     0.0648, energy:    0.1692
+Time:  0.0753, dt:  0.00043, norm rho:    0.06188, rho * u:    0.06725, energy:    0.1755
+Time:  0.0801, dt:  0.00043, norm rho:     0.0639, rho * u:    0.06935, energy:    0.1812
+Time:  0.0854, dt:  0.00044, norm rho:    0.06604, rho * u:    0.07164, energy:    0.1872
+Time:  0.0901, dt:  0.00044, norm rho:    0.06794, rho * u:    0.07364, energy:    0.1926
+Time:  0.0954, dt:  0.00043, norm rho:    0.06997, rho * u:    0.07572, energy:    0.1983
+Time:     0.1, dt:  0.00044, norm rho:    0.07175, rho * u:    0.07763, energy:    0.2033
+Time:   0.105, dt:  0.00044, norm rho:    0.07367, rho * u:    0.07963, energy:    0.2087
+Time:    0.11, dt:  0.00043, norm rho:    0.07539, rho * u:    0.08146, energy:    0.2135
+Time:   0.115, dt:  0.00043, norm rho:    0.07723, rho * u:    0.08337, energy:    0.2187
+Time:    0.12, dt:  0.00043, norm rho:    0.07887, rho * u:     0.0851, energy:    0.2234
+Time:   0.125, dt:  0.00043, norm rho:    0.08061, rho * u:    0.08697, energy:    0.2283
+Time:    0.13, dt:  0.00043, norm rho:    0.08219, rho * u:     0.0886, energy:    0.2327
+Time:   0.135, dt:  0.00044, norm rho:    0.08386, rho * u:    0.09042, energy:    0.2374
+Time:    0.14, dt:  0.00044, norm rho:    0.08538, rho * u:    0.09198, energy:    0.2417
+Time:   0.145, dt:  0.00043, norm rho:    0.08687, rho * u:    0.09355, energy:    0.2459
+Time:    0.15, dt:  0.00044, norm rho:    0.08847, rho * u:    0.09526, energy:    0.2504
+Time:   0.155, dt:  0.00043, norm rho:    0.08991, rho * u:    0.09675, energy:    0.2545
+Time:    0.16, dt:  0.00043, norm rho:    0.09146, rho * u:    0.09841, energy:    0.2588
+Time:   0.165, dt:  0.00043, norm rho:    0.09286, rho * u:    0.09985, energy:    0.2628
+Time:    0.17, dt:  0.00043, norm rho:    0.09435, rho * u:     0.1014, energy:     0.267
+Time:   0.175, dt:  0.00044, norm rho:    0.09569, rho * u:     0.1029, energy:    0.2708
+Time:    0.18, dt:  0.00044, norm rho:    0.09715, rho * u:     0.1044, energy:    0.2749
+Time:   0.185, dt:  0.00044, norm rho:    0.09845, rho * u:     0.1058, energy:    0.2785
+Time:    0.19, dt:  0.00044, norm rho:    0.09988, rho * u:     0.1073, energy:    0.2826
+Time:   0.195, dt:  0.00043, norm rho:     0.1012, rho * u:     0.1086, energy:    0.2862
+Time:     0.2, dt:  0.00044, norm rho:     0.1025, rho * u:     0.1101, energy:      0.29
+
++-------------------------------------+------------------+------------+------------------+
+| Total wallclock time elapsed        |      1671s     0 |      1671s |      1671s     0 |
+|                                     |                  |                               |
+| Section                 | no. calls |   min time  rank |   avg time |   max time  rank |
++-------------------------------------+------------------+------------+------------------+
+| apply - integrals       |      2736 |     351.3s     0 |     351.3s |     351.3s     0 |
+| apply - inverse mass    |      2736 |     17.81s     0 |     17.81s |     17.81s     0 |
+| compute errors          |        41 |     1.621s     0 |     1.621s |     1.621s     0 |
+| compute transport speed |        93 |     3.442s     0 |     3.442s |     3.442s     0 |
+| output                  |        41 |     101.3s     0 |     101.3s |     101.3s     0 |
+| rk time stepping total  |       456 |      1555s     0 |      1555s |      1555s     0 |
++-------------------------------------+------------------+------------+------------------+
