@@ -20,7 +20,7 @@ Other files in the directory:
 
 In the file `refman.pdf` there is all the description of the code Eulero. 
 The output results are stored in `../Eulero/build/results`
-In the build_Eulero there are the simulations obtained for the project.
+In the `build_Eulero` folder, download from `https://github.com/Felotti/Eulero.git`, there are the simulations obtained for the project.
 
 To generate a Makefile for this code using  Cmake, type the following command into the terminal from the main directory Eulero
 ``` 
