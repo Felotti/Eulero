@@ -529,8 +529,6 @@ void EulerProblem<dim>::make_grid()
         grid.refine_global(4);
         GridTools::rotate(numbers::PI_2,grid);
 
-      //  build_simple_hyper_shell(cyl, center, inner_radius,outer_radius, 0.8);
-
         std::set<typename Triangulation<dim>::active_cell_iterator> cells_to_remove;
         for(const auto &cell : grid.active_cell_iterators())
         {
@@ -1085,8 +1083,7 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
 {
 
     const unsigned int density_component = 0;
-       const unsigned int energy_component = dim+1;
-
+  
        QGauss<dim-1> quadrature(fe.degree + 1);
        FEFaceValues<dim> fe_face_values (mapping, fe, quadrature,
                                          update_values | update_normal_vectors);
@@ -1100,12 +1097,8 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
        unsigned int n_q_points = quadrature.size();
        std::vector<double> face_values(n_q_points), face_values_nbr(n_q_points);
 
-       // select indicator variable
-       unsigned int component;
-
-             component = density_component;
-
-           //  component = energy_component;
+       
+       unsigned int component = density_component;
 
        const FEValuesExtractors::Scalar variable (component);
 
@@ -1132,7 +1125,7 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
           // parts of the cell boundary.
           Point<dim> vel;
           for(unsigned int i=0; i<dim; ++i)
-             vel(i) = cell_average[c][i+1] / cell_average[c][density_component];
+             vel(i) = cell_average[c][i+1] / cell_average[c][0];
 
           for (unsigned int f=0; f<GeometryInfo<dim>::faces_per_cell; ++f)
              if (cell->at_boundary(f) == false)
@@ -1205,7 +1198,6 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
                 // boundary.
              }
 
-          // normalized shock indicator
           double cell_norm = cell_average[c][component];
           double denominator = std::pow(cell->diameter(), 0.5*(fe.degree+1)) *
                                inflow_measure *
@@ -1227,8 +1219,6 @@ void EulerProblem<dim>::compute_shock_indicator(LinearAlgebra::distributed::Vect
        }
 
       jump_ind_avg /= triangulation.n_active_cells();
-
-
 
 }
 
@@ -1275,7 +1265,6 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_limiter_TVB(
  QGauss<dim> qrule (fe.degree + 1);
  FEValues<dim> fe_values_grad (mapping, fe, qrule, update_gradients | update_JxW_values);
 
- // NOTE: We get multiple sets of same support points since fe is an FESystem
  Quadrature<dim> qsupport (fe.get_unit_support_points());
  FEValues<dim>   fe_values (mapping, fe, qsupport, update_quadrature_points);
 
@@ -1383,7 +1372,6 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_limiter_TVB(
        change_x /= n_components;
        change_y /= n_components;
 
-       // If limiter is active, reduce polynomial to linear
        if(change_x + change_y > 1.0e-10)
        {
           Dx_new /= dx;
@@ -1547,12 +1535,9 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_positivity_l
                 std::cout << "\t pressure = " << pressure << "\n";
                 exit(0);
              }
-             // t should strictly lie in [0,1]
+          
              t = std::min(1.0, t);
              t = std::max(0.0, t);
-             // Need t < 1.0. If t==1 upto machine precision
-             // then we are suffering from round off error.
-             // In this case we take the cell average value, t=0.
              if(std::fabs(1.0-t) < 1.0e-14) t = 0.0;
              theta2 = std::min(theta2, t);
           }
@@ -1561,7 +1546,7 @@ LinearAlgebra::distributed::Vector<Number> EulerProblem<dim>::apply_positivity_l
 
     if(theta2 < 1.0)
     {
-       if(!(theta1<1.0)) // local_dof_indices has not been computed before
+       if(!(theta1<1.0))
           cell->get_dof_indices (local_dof_indices);
 
        for(unsigned int i=0; i<fe.dofs_per_cell; ++i)
@@ -1682,7 +1667,7 @@ void EulerProblem<dim>::update(const double    current_time,
         vec_tmp3_Q0.reinit(solution_np_Q0);
     }
 
-    //stage 1 DENSITY
+    //stage 1 
     euler_operator_Q0.apply(current_time, tmp_solution_Q0, vec_tmp1_Q0);
     solution_np_Q0 = tmp_sol_n_Q0;
     solution_np_Q0.add(time_step/6.,vec_tmp1_Q0);
@@ -1732,7 +1717,7 @@ void EulerProblem<dim>::update(const double    current_time,
         vec_tmp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
     }
 
-   //PASSO 3
+   //stage 3
     euler_operator_Q0.apply(current_time,vec_tmp2_Q0,vec_tmp1_Q0);
     solution_np_Q0.add(2.*time_step/3.,vec_tmp1_Q0);
     euler_operator.apply(current_time,vec_tmp2,vec_tmp1);
@@ -1835,7 +1820,7 @@ void EulerProblem<dim>::output_results(const unsigned int result_number)
             interpretation.push_back(DataComponentInterpretation::component_is_scalar);
             solution.update_ghost_values();
             data_out.add_data_vector(dof_handler, solution, names, interpretation);
-          if(parameters.testcase == 4 && dim ==2)
+       /*   if(parameters.testcase == 4 && dim ==2)
            {
              LinearAlgebra::distributed::Vector<Number> sol_exact(solution);
              euler_operator.project(EquationData::ExactSolution<dim>(time,parameters), sol_exact);
@@ -1853,7 +1838,7 @@ void EulerProblem<dim>::output_results(const unsigned int result_number)
              interpretation_exact.push_back(DataComponentInterpretation::component_is_scalar);
             sol_exact.update_ghost_values();
              data_out.add_data_vector(dof_handler, sol_exact, names_exact, interpretation_exact);
-            }
+            }*/
 
           //  data_out.build_patches(mapping,fe.degree,DataOut<dim>::curved_inner_cells);
             std::vector<std::string> names_Q0;
@@ -1879,7 +1864,7 @@ void EulerProblem<dim>::output_results(const unsigned int result_number)
         Vector<double> mpi_owner(triangulation.n_active_cells());
         mpi_owner = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
         data_out.add_data_vector(mpi_owner, "owner");
-data_out.build_patches();
+        data_out.build_patches();
         const std::string filename =
                 "./results/solution_" + Utilities::int_to_string(result_number, 3) + ".vtu";
         data_out.write_vtu_in_parallel(filename, MPI_COMM_WORLD);
