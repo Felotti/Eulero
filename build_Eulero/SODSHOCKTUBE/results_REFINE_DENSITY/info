@@ -1,0 +1,175 @@
+subsection Physical data
+  set testcase = 4
+  set fe_degree = 2
+  set fe_degree_Q0 = 0
+  set n_q_points_1d = 5
+  set n_q_points_1d_Q0 = 1
+  set final_time   = 0.2
+  set gamma = 1.4
+end
+
+
+subsection Space discretization
+  set n_global_refinements = 3
+  set max_loc_refinements = 2 #4
+  set min_loc_refinements = 1 #2
+  set n_refinements = 1
+  set n_adaptive_pre_refinement_steps = 3
+end
+
+subsection Limiter
+  set beta_density = 0.70
+  set beta_momentum = 0.70
+  set beta_energy =0.70
+
+  set M = 0.0
+  set beta = 2.0
+  set positivity = false
+  set type =true #true is TVB, false is filter
+end
+
+subsection Param
+ set EulerNumericalFlux = harten_lax_vanleer
+# set RungeKuttaScheme = ssp_order_3
+end
+
+set n_stages = 3
+
+set refine = true
+
+#The output frequency
+set output_tick = 0.005
+
+Running with 1 MPI processes
+Vectorization over 2 doubles = 128 bits (SSE2)
+Time step size: 0.000840395, minimal h: 0.00625, initial transport scaling: 0.00528221
+
+Time:       0, dt:  0.00084, norm rho:  7.983e-17, rho * u:          0, energy: 2.209e-16
+Time: 0.00518, dt:  0.00025, norm rho:    0.01366, rho * u:    0.01493, energy:   0.03847
+Time:    0.01, dt:  0.00024, norm rho:    0.02012, rho * u:    0.02235, energy:   0.05844
+Time:  0.0152, dt:  0.00025, norm rho:    0.02553, rho * u:    0.02831, energy:    0.0743
+Time:  0.0201, dt:  0.00013, norm rho:    0.02998, rho * u:    0.03308, energy:   0.08663
+Time:  0.0251, dt:  0.00011, norm rho:    0.03421, rho * u:    0.03737, energy:   0.09824
+Time:  0.0301, dt:  0.00011, norm rho:    0.03789, rho * u:    0.04124, energy:    0.1086
+Time:  0.0351, dt:  0.00011, norm rho:     0.0412, rho * u:    0.04475, energy:    0.1179
+Time:  0.0401, dt:  0.00012, norm rho:    0.04432, rho * u:    0.04803, energy:    0.1267
+Time:  0.0451, dt:  0.00011, norm rho:    0.04723, rho * u:    0.05108, energy:    0.1348
+Time:    0.05, dt:  0.00011, norm rho:    0.04992, rho * u:    0.05392, energy:    0.1424
+Time:   0.055, dt:  0.00011, norm rho:    0.05253, rho * u:    0.05666, energy:    0.1497
+Time:  0.0601, dt:  0.00011, norm rho:    0.05502, rho * u:    0.05929, energy:    0.1567
+Time:  0.0651, dt:  0.00011, norm rho:    0.05742, rho * u:     0.0618, energy:    0.1634
+Time:  0.0701, dt:  0.00012, norm rho:    0.05968, rho * u:    0.06417, energy:    0.1698
+Time:   0.075, dt:  0.00011, norm rho:    0.06185, rho * u:    0.06646, energy:    0.1759
+Time:    0.08, dt:  0.00011, norm rho:    0.06399, rho * u:    0.06872, energy:    0.1819
+Time:  0.0851, dt:  0.00011, norm rho:    0.06605, rho * u:    0.07088, energy:    0.1876
+Time:    0.09, dt:  0.00012, norm rho:    0.06802, rho * u:    0.07297, energy:    0.1932
+Time:  0.0951, dt:  0.00011, norm rho:    0.06999, rho * u:    0.07505, energy:    0.1988
+Time:     0.1, dt:  0.00011, norm rho:    0.07189, rho * u:    0.07706, energy:    0.2041
+Time:   0.105, dt:  0.00011, norm rho:     0.0737, rho * u:    0.07897, energy:    0.2092
+Time:    0.11, dt:  0.00011, norm rho:     0.0755, rho * u:    0.08087, energy:    0.2143
+Time:   0.115, dt:  0.00012, norm rho:    0.07726, rho * u:    0.08272, energy:    0.2192
+Time:    0.12, dt:  0.00012, norm rho:    0.07898, rho * u:    0.08453, energy:     0.224
+Time:   0.125, dt:  0.00011, norm rho:    0.08063, rho * u:    0.08628, energy:    0.2287
+Time:    0.13, dt:  0.00011, norm rho:    0.08227, rho * u:    0.08802, energy:    0.2333
+Time:   0.135, dt:  0.00012, norm rho:     0.0839, rho * u:    0.08975, energy:    0.2379
+Time:    0.14, dt:  0.00011, norm rho:    0.08546, rho * u:    0.09139, energy:    0.2422
+Time:   0.145, dt:  0.00012, norm rho:    0.08703, rho * u:    0.09305, energy:    0.2467
+Time:    0.15, dt:  0.00011, norm rho:    0.08853, rho * u:    0.09464, energy:    0.2509
+Time:   0.155, dt:  0.00011, norm rho:    0.09004, rho * u:    0.09624, energy:    0.2552
+Time:    0.16, dt:  0.00012, norm rho:    0.09151, rho * u:    0.09779, energy:    0.2593
+Time:   0.165, dt:  0.00012, norm rho:    0.09296, rho * u:    0.09933, energy:    0.2634
+Time:    0.17, dt:  0.00011, norm rho:    0.09438, rho * u:     0.1008, energy:    0.2674
+Time:   0.175, dt:  0.00011, norm rho:    0.09579, rho * u:     0.1023, energy:    0.2714
+Time:    0.18, dt:  0.00011, norm rho:    0.09719, rho * u:     0.1038, energy:    0.2753
+Time:   0.185, dt:  0.00011, norm rho:    0.09856, rho * u:     0.1053, energy:    0.2792
+Time:    0.19, dt:  0.00012, norm rho:    0.09989, rho * u:     0.1067, energy:    0.2829
+Time:   0.195, dt:  0.00012, norm rho:     0.1012, rho * u:     0.1081, energy:    0.2867
+Time:     0.2, dt:  0.00012, norm rho:     0.1025, rho * u:     0.1095, energy:    0.2904
+
++-------------------------------------+------------------+------------+------------------+
+| Total wallclock time elapsed        |  3.46e+04s     0 |  3.46e+04s |  3.46e+04s     0 |
+|                                     |                  |                               |
+| Section                 | no. calls |   min time  rank |   avg time |   max time  rank |
++-------------------------------------+------------------+------------+------------------+
+| apply - integrals       |      9930 |      4874s     0 |      4874s |      4874s     0 |
+| apply - inverse mass    |      9930 |     243.7s     0 |     243.7s |     243.7s     0 |
+| compute errors          |        41 |     5.374s     0 |     5.374s |     5.374s     0 |
+| compute transport speed |       333 |     44.42s     0 |     44.42s |     44.42s     0 |
+| output                  |        41 |     401.5s     0 |     401.5s |     401.5s     0 |
+| rk time stepping total  |      1655 | 3.315e+04s     0 | 3.315e+04s | 3.315e+04s     0 |
++-------------------------------------+------------------+------------+------------------+
+
+
+std::vector<Vector<double>> computed_quantities_pressione(fe_values.n_quadrature_points);
+for (unsigned int cell_no=0; cell1!=endc1; ++cell1, ++cell_no)
+    {
+       fe_v.reinit(cell1);
+       fe_v.get_function_values(solution, solutione_p);
+for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)   //n_q_points
+    {const double         pressure = euler_pressure<dim>(solution_p,parameters);
+    computed_quantities_pressione[q](dim)     = pressure;
+    }
+     std::vector<Tensor<1,dim>> gradients(fe_values.n_quadrature_points);
+      fe_values.get_function_gradients(computed_quantities_pressione, gradients);
+       estimated_error_per_cell(cell_no) = std::log(1+std::sqrt(dU[0][0] * dU[0][0]));
+    }
+    
+    //QUA
+ for (unsigned int q = 0; q < fe_values.n_quadrature_points; ++q)   //n_q_points
+    {
+        //Tensor<1, dim + 2> solution;
+        //for (unsigned int d = 0; d < dim + 2; ++d)
+          //  solution[d] = inputs.solution_values[q](d);
+
+        //const double         density  = solution[0];
+        //const Tensor<1, dim> velocity = euler_velocity<dim>(solution);
+        const double         pressure = euler_pressure<dim>(solution,parameters);
+
+        //for (unsigned int d = 0; d < dim; ++d)
+          //  computed_quantities[q](d) = velocity[d];
+
+            computed_quantities_pressione[q](dim)     = pressure;
+}
+
+//FEValues<dim>& fe_values = scratch_data.fe_values;
+  //    fe_values.reinit(cell);
+
+      std::vector<Tensor<1,dim>> gradients(fe_values.n_quadrature_points);
+      fe_values.get_function_gradients(computed_quantities_pressione, gradients);
+      
+      //OPPURE provo con DERIVEAPPROXIMATION
+   Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
+DerivativeApproximation::approximate_gradient(mapping,
+                                          dof_handler,
+                                          computed_quantities_pressione,
+                                          estimated_error_per_cell);
+
+for(const auto &cell : triangulation.active_cell_iterators())
+{
+estimated_error_per_cell[cell->active_cell_index()] = estimated_error_per_cell[cell->active_cell_index()];
+estimated_error_per_cell[cell->active_cell_index()] *= std::pow(cell->diameter(), 1+1.0*dim/2);
+}
+   
+   
+   
+   
+   
+   
+      
+      for (; cell!=endc; ++cell)
+  {
+     unsigned int cell_no = cell_number(cell);
+     
+        fe_values.reinit(cell);
+        fe_values.get_function_values (solution, solution_values);
+}
+      std::vector<std::vector<dealii::Tensor<1,dim> > >   dU(1, std::vector<dealii::Tensor<1,dim> >(dim+2));
+
+    typename DoFHandler<dim>::active_cell_iterator  cell1 = dof_handler.begin_active(), endc1 = dof_handler.end();
+    for (unsigned int cell_no=0; cell1!=endc1; ++cell1, ++cell_no)
+    {
+       fe_v.reinit(cell1);
+       fe_v.get_function_gradients(solution, dU);
+
+       estimated_error_per_cell(cell_no) = std::log(1+std::sqrt(dU[0][0] * dU[0][0]));
+    }
