@@ -1689,7 +1689,7 @@ void EulerProblem<dim>::update(const double    current_time,
     }
     else if (parameters.type == "filter")
     {
-         vec_mp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
+         vec_tmp2 = apply_filter(vec_tmp2,vec_tmp2_Q0);
     }
 
     //stage 2
