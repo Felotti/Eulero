@@ -22,12 +22,12 @@ subsection Limiter
   set M = 0.0
   set beta = 2.0
   set positivity = false
-  set type = filter                #Choice TVB|filter
+  set type = TVB                #Choice TVB|filter
   set function_limiter = minmod  #Choice minmod|vanAlbada
 end
 
 subsection Param
- set EulerNumericalFlux = roe   #Choice lax_friedrichs|harten_lax_vanleer|hllc_centered|SLAU|HLLC|roe
+ set EulerNumericalFlux = harten_lax_vanleer   #Choice lax_friedrichs|harten_lax_vanleer|hllc_centered|SLAU|HLLC|roe
 end
 
 set n_stages = 3
