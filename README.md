@@ -37,7 +37,7 @@ cmake --build .
 ```
 ```
 mkdir results
-``
+```
 ``` 
 ./main "../inputfile_***.prm"
 ```
