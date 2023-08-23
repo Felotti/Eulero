@@ -979,7 +979,7 @@ void EulerProblem<dim>::adapt_mesh()
 
 
 #ifdef DEAL_II_WITH_P4EST
-  paralel::distriuted::SolutionTransfer<dim,LinearAlgebra::distributed::Vector<Number>> sol_trans(*reinterpret_cast<const DofHandler<dim>*>(&dof_handler));
+  parallel::distributed::SolutionTransfer<dim,LinearAlgebra::distributed::Vector<Number>> sol_trans(*reinterpret_cast<const DoFHandler<dim>*>(&dof_handler));
   triangulation.prepare_coarsening_and_refinement();
   sol_trans.prepare_for_coarsening_and_refinement(solution);
   triangulation.execute_coarsening_and_refinement();
