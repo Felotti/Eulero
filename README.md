@@ -4,7 +4,7 @@ In the file `main.cpp` we can select different test cases and running the progrm
 - backward facing step test case -> `inputfile_bstep.prm`
 - forward facing step test case"-> `inputfile_fstep.prm`
 - sod-Shock problem -> `inputfile_sod.prm`
-- supersonic flow past a circular cylinder test -> `inputfile_cylinder.prm`
+- supersonic/hypersonic flow past a circular cylinder test -> `inputfile_cylinder.prm`
 - double-mach reflection problem; -> `inputfile_DMR.prm`
 - 2D Riemann problem -> `inputfile_2Driemann.prm`
     
