@@ -1,0 +1,62 @@
+DMR refine 2 4 TVB HLL 
+
+Running with 1 MPI processes
+Vectorization over 2 doubles = 128 bits (SSE2)
+38874 29184 29184 
+Time step size: 0.000142134, minimal h: 0.0104167, initial transport scaling: 0.000893371
+
+Time:       0, dt:  0.00014, norm rho:     0.1823, rho * u:      1.823, energy:      15.5
+Time: 0.00513, dt:  0.00014, norm rho:      1.467, rho * u:      14.78, energy:     127.2
+Time:    0.01, dt:  0.00011, norm rho:      2.188, rho * u:      21.77, energy:     188.9
+Time:  0.0151, dt:  0.00011, norm rho:      2.763, rho * u:      27.19, energy:     237.8
+Time:    0.02, dt:  0.00011, norm rho:      3.245, rho * u:      31.65, energy:     278.6
+Time:  0.0251, dt:   0.0001, norm rho:      3.718, rho * u:      35.95, energy:     318.7
+Time:    0.03, dt:  0.00011, norm rho:       4.15, rho * u:      39.82, energy:     355.2
+Time:   0.035, dt:  0.00011, norm rho:       4.57, rho * u:      43.54, energy:     390.8
+Time:    0.04, dt:   0.0001, norm rho:      4.979, rho * u:      47.12, energy:     425.4
+Time:   0.045, dt:  9.8e-05, norm rho:      5.376, rho * u:      50.55, energy:     458.9
+Time:  0.0501, dt:  9.1e-05, norm rho:      5.767, rho * u:      53.89, energy:     491.7
+Time:   0.055, dt:  8.9e-05, norm rho:       6.14, rho * u:      57.03, energy:     522.9
+Time:    0.06, dt:  8.8e-05, norm rho:      6.514, rho * u:      60.18, energy:     554.4
+Time:   0.065, dt:  8.6e-05, norm rho:      6.876, rho * u:       63.2, energy:     584.9
+Time:    0.07, dt:  8.6e-05, norm rho:      7.234, rho * u:      66.16, energy:     614.9
+Time:  0.0751, dt:  8.5e-05, norm rho:      7.591, rho * u:      69.09, energy:     644.9
+Time:  0.0801, dt:  8.5e-05, norm rho:      7.941, rho * u:      71.94, energy:     674.2
+Time:   0.085, dt:  8.4e-05, norm rho:      8.285, rho * u:      74.73, energy:     703.1
+Time:    0.09, dt:  8.3e-05, norm rho:       8.63, rho * u:      77.52, energy:       732
+Time:  0.0951, dt:  8.2e-05, norm rho:      8.974, rho * u:      80.29, energy:     760.9
+Time:     0.1, dt:  8.2e-05, norm rho:      9.307, rho * u:      82.95, energy:       789
+Time:   0.105, dt:  8.2e-05, norm rho:      9.642, rho * u:      85.61, energy:       817
+Time:    0.11, dt:  8.2e-05, norm rho:      9.978, rho * u:      88.29, energy:     845.4
+Time:   0.115, dt:  8.1e-05, norm rho:      10.31, rho * u:      90.95, energy:     873.7
+Time:    0.12, dt:  8.2e-05, norm rho:      10.64, rho * u:      93.55, energy:     901.4
+Time:   0.125, dt:  8.2e-05, norm rho:      10.98, rho * u:      96.17, energy:     929.4
+Time:    0.13, dt:  8.2e-05, norm rho:       11.3, rho * u:      98.69, energy:     956.5
+Time:   0.135, dt:  8.2e-05, norm rho:      11.63, rho * u:      101.3, energy:       984
+Time:    0.14, dt:  8.2e-05, norm rho:      11.96, rho * u:      103.8, energy:      1012
+Time:   0.145, dt:  8.3e-05, norm rho:      12.28, rho * u:      106.3, energy:      1039
+Time:    0.15, dt:  8.3e-05, norm rho:       12.6, rho * u:      108.8, energy:      1066
+Time:   0.155, dt:  8.3e-05, norm rho:      12.93, rho * u:      111.3, energy:      1093
+Time:    0.16, dt:  8.3e-05, norm rho:      13.25, rho * u:      113.8, energy:      1120
+Time:   0.165, dt:  8.4e-05, norm rho:      13.57, rho * u:      116.3, energy:      1147
+Time:    0.17, dt:  8.4e-05, norm rho:       13.9, rho * u:      118.8, energy:      1175
+Time:   0.175, dt:  8.4e-05, norm rho:      14.22, rho * u:      121.2, energy:      1202
+Time:    0.18, dt:  8.3e-05, norm rho:      14.54, rho * u:      123.7, energy:      1229
+Time:   0.185, dt:  8.3e-05, norm rho:      14.86, rho * u:      126.1, energy:      1255
+Time:    0.19, dt:  8.4e-05, norm rho:      15.18, rho * u:      128.5, energy:      1282
+Time:   0.195, dt:  8.4e-05, norm rho:       15.5, rho * u:        131, energy:      1309
+Time:     0.2, dt:  8.3e-05, norm rho:      15.82, rho * u:      133.4, energy:      1336
+
++-------------------------------------+------------------+------------+------------------+
+| Total wallclock time elapsed        | 2.645e+04s     0 | 2.645e+04s | 2.645e+04s     0 |
+|                                     |                  |                               |
+| Section                 | no. calls |   min time  rank |   avg time |   max time  rank |
++-------------------------------------+------------------+------------+------------------+
+| apply - integrals       |     13482 |      3457s     0 |      3457s |      3457s     0 |
+| apply - inverse mass    |     13482 |       166s     0 |       166s |       166s     0 |
+| compute errors          |        41 |     4.901s     0 |     4.901s |     4.901s     0 |
+| compute transport speed |       451 |     31.52s     0 |     31.52s |     31.52s     0 |
+| output                  |        41 |     219.8s     0 |     219.8s |     219.8s     0 |
+| rk time stepping total  |      2247 | 2.512e+04s     0 | 2.512e+04s | 2.512e+04s     0 |
++-------------------------------------+------------------+------------+------------------+
+
