@@ -15,14 +15,13 @@ subsection Space discretization
 end
 
 subsection Limiter
-  set beta_density = 0.0
-  set beta_momentum =0.20
-  set beta_energy = 0.20
+  set beta_density = 0.10
+  set beta_momentum =0.10
+  set beta_energy = 0.10
 
   set M = 0.0
   set beta = 1.0
   set positivity = true
-  set positivity = false
   set type = TVB                 #Choice TVB|filter
   set function_limiter = minmod  #Choice minmod|vanAlbada
 end
@@ -37,6 +36,6 @@ set refine = false
 set refine_indicator = gradient_density  #Choice gradient_density|gradient_pressure
 
 #The output frequency
-set output_tick = 0.2
+set output_tick = 0.5
 
 
