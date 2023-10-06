@@ -800,56 +800,7 @@ void EulerProblem<dim>::make_dofs()
 
          }
    }
-    //set time in boundary condition of testcase double mach reflection
-  /*  double length = 3.2;
-    double height = 1.0;
-    double wall_position = 1./6.;
-    for (typename Triangulation<dim>::active_cell_iterator cell=triangulation.begin_active();
-         cell!=triangulation.end(); ++cell)
-    {
-        for(unsigned int j=0; j< GeometryInfo<dim>::faces_per_cell; ++j )
-        {
-         if(cell->face(j)->at_boundary())
-         {
-            if(cell->face(j)->center()[0] <1.0e-6 )
-               cell->face(j)->set_boundary_id(0);
 
-            if(cell->face(j)->center()[0] >length - 1.e-6)
-               cell->face(j)->set_boundary_id(1);
-
-            if(std::fabs(cell->face(j)->center()[1] - height)<1e-6)
-               cell->face(j)->set_boundary_id(2);
-
-            //bottom boundary x<=1/6 has ID = 3
-            if(cell->face(j)->center()[0] <= wall_position && cell->face(j)->center()[1] <1.e-6)
-               cell->face(j)->set_boundary_id(3);
-
-            //bottom boundary x>=1/6 has ID = 4
-            if(cell->face(j)->center()[0] > wall_position && cell->face(j)->center()[1]<1.e-6)
-               cell->face(j)->set_boundary_id(4);
-
-
-    }
-        }
-    }
-
-    euler_operator.set_inflow_boundary(
-        0, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
-    euler_operator.set_inflow_boundary(
-        2, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,1));
-    euler_operator.set_supersonic_outflow_boundary(1);
-    euler_operator.set_inflow_boundary(
-        3, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
-    euler_operator.set_wall_boundary(4);
-
-    euler_operator_Q0.set_inflow_boundary(
-        0, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
-    euler_operator_Q0.set_supersonic_outflow_boundary(1);
-    euler_operator_Q0.set_inflow_boundary(
-        2, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,1));
-    euler_operator_Q0.set_inflow_boundary(
-        3, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
-    euler_operator_Q0.set_wall_boundary(4);*/
 }
 
 /*! This function take care of the adaptive mesh refinement.
@@ -1000,6 +951,110 @@ void EulerProblem<dim>::adapt_mesh()
 
 
     triangulation.execute_coarsening_and_refinement();
+
+ //set boundary condition of testcase FFS
+      if(parameters.testcase==3){
+ const double height_step = 0.2;
+    const double pos_step = 0.6;  // step positioned at x=0.6
+    const int height = 1;
+    const int X1_coordinate_inflow = 0;
+    const int X1_coordinate_outflow = 3;
+    const int Y1_bottom = 0;
+
+    //set boundary ID's
+    for(auto &face : triangulation.active_face_iterators())
+    {
+       if(face->at_boundary())
+       {
+            //left boundary has ID = 2
+            if(face->center()[0] == X1_coordinate_inflow )
+            face->set_boundary_id(2);
+
+            //right boundary has ID = 3
+            if(face->center()[0] == X1_coordinate_outflow)
+            face->set_boundary_id(3);
+
+            //bottom boundary has ID = 0
+            if(face->center()[1] == Y1_bottom)
+            face->set_boundary_id(0);
+
+            //top boundary has ID = 1
+            if(face->center()[1] == height)
+            face->set_boundary_id(1);
+
+            //obstacle boundary has ID = 4
+            if((face->center()[0] == pos_step) || (face->center()[1] == height_step))
+            face->set_boundary_id(4);
+       }
+    }
+
+    euler_operator.set_inflow_boundary(
+        2, std::make_unique<EquationData::BoundaryData<dim>>(0,parameters,1));
+    euler_operator.set_supersonic_outflow_boundary(3);
+    euler_operator.set_wall_boundary(1);
+    euler_operator.set_wall_boundary(4);
+    euler_operator.set_wall_boundary(0);
+
+    euler_operator_Q0.set_inflow_boundary(
+        2, std::make_unique<EquationData::BoundaryData<dim>>(0,parameters,1));
+    euler_operator_Q0.set_supersonic_outflow_boundary(3);
+    euler_operator_Q0.set_wall_boundary(1);
+    euler_operator_Q0.set_wall_boundary(4);
+    euler_operator_Q0.set_wall_boundary(0);
+  }
+
+if(parameters.testcase==6){
+    //set time in boundary condition of testcase double mach reflection
+     double length = 3.2;
+    double height = 1.0;
+    double wall_position = 1./6.;
+    for (typename Triangulation<dim>::active_cell_iterator cell=triangulation.begin_active();
+         cell!=triangulation.end(); ++cell)
+    {
+        for(unsigned int j=0; j< GeometryInfo<dim>::faces_per_cell; ++j )
+        {
+         if(cell->face(j)->at_boundary())
+         {
+            if(cell->face(j)->center()[0] <1.0e-6 )
+               cell->face(j)->set_boundary_id(0);
+
+            if(cell->face(j)->center()[0] >length - 1.e-6)
+               cell->face(j)->set_boundary_id(1);
+
+            if(std::fabs(cell->face(j)->center()[1] - height)<1e-6)
+               cell->face(j)->set_boundary_id(2);
+
+            //bottom boundary x<=1/6 has ID = 3
+            if(cell->face(j)->center()[0] <= wall_position && cell->face(j)->center()[1] <1.e-6)
+               cell->face(j)->set_boundary_id(3);
+
+            //bottom boundary x>=1/6 has ID = 4
+            if(cell->face(j)->center()[0] > wall_position && cell->face(j)->center()[1]<1.e-6)
+               cell->face(j)->set_boundary_id(4);
+
+
+    }
+        }
+    }
+
+    euler_operator.set_inflow_boundary(
+        0, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
+    euler_operator.set_inflow_boundary(
+        2, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,1));
+    euler_operator.set_supersonic_outflow_boundary(1);
+    euler_operator.set_inflow_boundary(
+        3, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
+    euler_operator.set_wall_boundary(4);
+
+    euler_operator_Q0.set_inflow_boundary(
+        0, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
+    euler_operator_Q0.set_supersonic_outflow_boundary(1);
+    euler_operator_Q0.set_inflow_boundary(
+        2, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,1));
+    euler_operator_Q0.set_inflow_boundary(
+        3, std::make_unique<EquationData::BoundaryData<dim>>(time,parameters,0));
+    euler_operator_Q0.set_wall_boundary(4);
+} 
     make_dofs();
     sol_trans.interpolate(xsol,solution);
     sol_trans_Q0.interpolate(xsol_Q0,solution_Q0);
